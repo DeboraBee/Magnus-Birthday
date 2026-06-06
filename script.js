@@ -1,8 +1,27 @@
-// 1. Elementos da Música (Novidade)
+// 1. Elementos da Música e Lógica de Autoplay
 const music = document.getElementById('background-music');
 const musicBtn = document.getElementById('music-control');
 const musicIcon = document.getElementById('music-icon');
 let isPlaying = false;
+
+function playMusic() {
+    music.play().then(() => {
+        isPlaying = true;
+        musicIcon.innerText = '🔊';
+    }).catch(error => {
+        console.log("Autoplay bloqueado pelo navegador. Aguardando interação...");
+    });
+}
+
+// Tenta tocar assim que a página carregar
+window.addEventListener('load', playMusic);
+
+// TRUQUE: Toca no primeiro clique ou toque em qualquer lugar da tela (caso o autoplay falhe)
+document.addEventListener('click', () => {
+    if (!isPlaying) {
+        playMusic();
+    }
+}, { once: true }); // O 'once: true' faz isso rodar apenas no primeiro clique
 
 function toggleMusic() {
     if (isPlaying) {
@@ -16,7 +35,10 @@ function toggleMusic() {
 }
 
 if (musicBtn) {
-    musicBtn.addEventListener('click', toggleMusic);
+    musicBtn.addEventListener('click', (e) => {
+        e.stopPropagation(); // Evita conflito com o clique global
+        toggleMusic();
+    });
 }
 
 // 2. Efeito de Digitação para o Texto de Introdução
