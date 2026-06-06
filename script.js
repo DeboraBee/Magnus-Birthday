@@ -1,4 +1,25 @@
-// 1. Efeito de Digitação para o Texto de Introdução
+// 1. Elementos da Música (Novidade)
+const music = document.getElementById('background-music');
+const musicBtn = document.getElementById('music-control');
+const musicIcon = document.getElementById('music-icon');
+let isPlaying = false;
+
+function toggleMusic() {
+    if (isPlaying) {
+        music.pause();
+        musicIcon.innerText = '🔈';
+    } else {
+        music.play();
+        musicIcon.innerText = '🔊';
+    }
+    isPlaying = !isPlaying;
+}
+
+if (musicBtn) {
+    musicBtn.addEventListener('click', toggleMusic);
+}
+
+// 2. Efeito de Digitação para o Texto de Introdução
 function typeWriter(elemento) {
     const textoArray = elemento.innerHTML.split('');
     elemento.innerHTML = '';
@@ -7,12 +28,12 @@ function typeWriter(elemento) {
     });
 }
 
-// 2. Explosão de Corações ao Clicar
+// 3. Explosão de Corações ao Clicar
 document.addEventListener('click', (e) => {
     for (let i = 0; i < 8; i++) {
         const heart = document.createElement('div');
         heart.classList.add('click-heart');
-        heart.innerHTML = '❤️';
+        heart.innerHTML = '💖';
         heart.style.left = e.clientX + 'px';
         heart.style.top = e.clientY + 'px';
         
@@ -28,11 +49,11 @@ document.addEventListener('click', (e) => {
     }
 });
 
-// 3. Chuva de Corações Constante (O que já tínhamos)
+// 4. Chuva de Corações Constante (O que já tínhamos)
 function createFallingHeart() {
     const heart = document.createElement('div');
     heart.classList.add('falling-heart');
-    heart.innerHTML = '❤️';
+    heart.innerHTML = '💖';
     heart.style.left = Math.random() * 100 + "vw";
     const size = Math.random() * 15 + 10 + "px";
     heart.style.fontSize = size;
@@ -43,7 +64,7 @@ function createFallingHeart() {
 }
 setInterval(createFallingHeart, 500);
 
-// 4. Revelação Suave ao Rolar a Página (Scroll Reveal)
+// 5. Revelação Suave ao Rolar a Página (Scroll Reveal)
 const observerOptions = { threshold: 0.1 };
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
